@@ -1,20 +1,25 @@
 ---
 - name: Install and configure web service
+  gather_facts: no
   hosts:
     - serverc.lab.example.com
     - serverd.lab.example.com
 
   tasks:
-    - name: Install apache
+  
+    - name: Ver los facts
+      debug:
+        var: ansible_facts
+   - name: Install {{ servidor }}
       yum:
-        name: apache2
+        name: "{{ servidor }}"
         state: latest
 
-    - name: Enable and start apache
+    - name: "{{ estado }} {{ servidor }}"
       service:
-        name: apache2
+        name: "{{ servidor }}"
         enabled: true
-        state: started
+        state: "{{ estado }}"
   
     - name: Install firewalld
       yum:
